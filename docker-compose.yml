@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    container_name: django_app
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0,194.116.215.183
+    restart: always
+    command: gunicorn --config gunicorn_config.py core.wsgi:application
+
+volumes:
+  static_volume: 
